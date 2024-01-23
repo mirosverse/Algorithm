@@ -12,8 +12,8 @@ public class Main {
             int W = sc.nextInt();   // 각 층의 방 수
             int N = sc.nextInt();   // 몇 번째 손님
 
-            int floor = (N % H == 0) ? H : N % H;
-            int room = (N % H == 0) ? N / H : N / H + 1;
+            int floor = (N - 1) % H + 1;
+            int room = (N - 1) / H + 1;
 
             System.out.println(floor + String.format("%02d", room));
         }
