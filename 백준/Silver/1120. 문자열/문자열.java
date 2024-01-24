@@ -7,25 +7,15 @@ public class Main {
         String A = sc.next();
         String B = sc.next();
 
-        int ans = 0;
-
-        if (A.length() == B.length()) {
-            for (int i = 0; i < B.length(); i++) {
-                if (A.charAt(i) != B.charAt(i)) ans++;
+        int min = A.length();
+        for (int i = 0; i <= B.length() - A.length(); i++) {
+            int match = 0;
+            for (int j = 0; j < A.length(); j++) {
+                if (A.charAt(j) != B.charAt(i + j)) match++;
             }
-        } else {
-            int max = A.length();
-            for (int i = 0; i <= B.length() - A.length(); i++) {
-                int match = 0;
-                for (int j = 0; j < A.length(); j++) {
-                    if (A.charAt(j) != B.charAt(i + j)) match++;
-                }
-                max = Math.min(match, max);
-            }
-
-            ans= max;
+            min = Math.min(match, min);
         }
 
-        System.out.println(ans);
+        System.out.println(min);
     }
 }
