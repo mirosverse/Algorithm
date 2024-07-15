@@ -1,34 +1,35 @@
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 class Main {
+    static int N, M;
+    static int[] cost;
 
     public static void main(String[] args) throws IOException {
-        Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
-        int K = sc.nextInt();
-
-        Queue<Integer> queue = new LinkedList<>();
-        for (int i = 1; i <= N; i++) {
-            queue.add(i);
-        }
-
+        Scanner scanner = new Scanner(System.in);
+        int N = scanner.nextInt();
+        int K = scanner.nextInt();
 
         StringBuilder sb = new StringBuilder("<");
-        int count = 0;
-        while (!queue.isEmpty()) {
-            int cur = queue.poll();
-            if (++count % K == 0) {
-                sb.append(cur).append(", ");
-                continue;
-            }
-            queue.offer(cur);
+        List<Integer> list = new ArrayList<>();
+
+        for (int i = 1; i <= N; i++) {
+            list.add(i);
         }
+
+        int cnt = 0;
+        while (!list.isEmpty()) {
+            cnt = (cnt + K -1) % list.size();
+            int cur = list.remove(cnt);
+            sb.append(cur).append(", ");
+        }
+
         sb.delete(sb.length() - 2, sb.length());
         sb.append(">");
-
-        System.out.println(sb.toString());
+        System.out.printf(sb.toString());
     }
 
-
 }
+
