@@ -1,9 +1,13 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
 
 class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         int N = Integer.parseInt(br.readLine());
 
         Queue<Integer> queue = new LinkedList<>();
@@ -12,18 +16,22 @@ class Main {
         while ((cur = Integer.parseInt(br.readLine())) != -1) {
             if (cur == 0) {
                 queue.poll();
+            } else if (queue.size() == N) {
                 continue;
+            } else {
+                queue.offer(cur);
             }
-            if (queue.size() == N) continue;
-            queue.add(cur);
         }
 
-        StringBuilder sb = new StringBuilder();
-        while (!queue.isEmpty()) {
-            sb.append(queue.poll()).append(" ");
+        if (queue.isEmpty()) {
+            System.out.printf("empty");
+        } else {
+            while (!queue.isEmpty()) {
+                System.out.print(queue.poll()+" ");
+            }
         }
-        if(sb.toString().equals("")) sb.append("empty");
-        System.out.println(sb.toString());
 
     }
+
 }
+
