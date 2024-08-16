@@ -1,55 +1,54 @@
-
-/* 11054 바이토닉 수열 : 증가 부분수열 + 감소 부분수열 로 이루어져있음
-LIS 알고리즘
-dp1, dp2 - 각각 증가([0]~[n-1]), 감소([n-1]~[0])하는 구간  부분수열의 길이를 구함
-Math.max(dp1[i]+dp2[i+1], 현재값)
- */
-
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-    static Integer[] seq, dpIncrease, dpDecrease;
     static int N;
+    static int[] arr, dp1, dp2;
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        N = sc.nextInt();
-        seq = new Integer[N];
-        dpIncrease = new Integer[N];
-        dpDecrease = new Integer[N];
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        N = Integer.parseInt(br.readLine());
+        arr = new int[N];
+        dp1 = new int[N];
+        dp2 = new int[N];
 
+        StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
-            seq[i] = sc.nextInt();
+            arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        int result = 0;
-        for (int i = 0; i < N ; i++) {
-            result = Math.max(result, LIS1(i) + LIS2(i));
+        init();
+        int answer = 0;
+        for (int i = 0; i < N; i++) {
+            answer = Math.max(answer, dp1[i] + dp2[i]);
         }
-        System.out.println(--result);
+        System.out.println(answer + 1);
     }
 
-    static int LIS1(int n) {
-        if (dpIncrease[n] == null) {
-            dpIncrease[n] = 1;
-            for (int i = n - 1; i >= 0; i--) {
-                if (seq[i] < seq[n])
-                    dpIncrease[n] = Math.max(dpIncrease[n], LIS1(i) + 1);
+    static void init() {
+        for (int i = 0; i < N; i++) {
+            LIS1(i);
+            LIS2(N - i - 1);
+        }
+    }
+
+    // 증가하는 구간
+    static void LIS1(int n) {
+        for (int i = 0; i < n; i++) {
+            if (arr[i] < arr[n]) {
+                dp1[n] = Math.max(dp1[n], dp1[i] + 1);
             }
         }
-        return dpIncrease[n];
     }
 
-    static int LIS2(int n) {
-        if (dpDecrease[n] == null) {
-            dpDecrease[n] = 1;
-            for (int i = n + 1; i <= N - 1; i++) {
-                if (seq[i] < seq[n])
-                    dpDecrease[n] = Math.max(dpDecrease[n], LIS2(i) + 1);
+    // 마지막부터 증가하는 구간
+    static void LIS2(int n) {
+        for (int i = N - 1; i >= n; i--) {
+            if (arr[i] < arr[n]) {
+                dp2[n] = Math.max(dp2[n], dp2[i] + 1);
             }
         }
-        return dpDecrease[n];
     }
-
-
 }
