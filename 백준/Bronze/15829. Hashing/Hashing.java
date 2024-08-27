@@ -1,18 +1,22 @@
 import java.io.*;
-import java.util.*;
+import java.math.BigInteger;
 
 class Main {
 
-    static int L, R = 31, MOD = 1234567891, answer = 0;
+    static int L, R = 31, MOD = 1234567891;
+    static BigInteger answer = BigInteger.ZERO;
+    static BigInteger bigR = BigInteger.valueOf(R);
+    static BigInteger bigMOD = BigInteger.valueOf(MOD);
 
-	static public void main(String []args) throws IOException {
+    public static void main(String []args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         L = Integer.parseInt(br.readLine());
         String str = br.readLine();
         
-        for (int i = 0; i< str.length(); i++){
+        for (int i = 0; i < L; i++) {
             int a = str.charAt(i) - 'a' + 1;
-            answer += a * Math.pow(R, i) % MOD;
+            BigInteger b = bigR.pow(i).mod(bigMOD); 
+            answer = answer.add(BigInteger.valueOf(a).multiply(b)).mod(bigMOD);
         }
 
         System.out.println(answer);
